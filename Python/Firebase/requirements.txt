@@ -1,0 +1,2 @@
+google-cloud-error-reporting==0.30.0
+firebase-admin==2.13.0

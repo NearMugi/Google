@@ -1,0 +1,2 @@
+cd /d %~dp0\TweetsAddFirebase
+gcloud functions deploy TweetsCollect_SearchWord --runtime python37 --trigger-resource twitterCollect_SearchWord --trigger-event google.pubsub.topic.publish --region asia-northeast1

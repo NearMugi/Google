@@ -1,0 +1,4 @@
+google-cloud-error-reporting==0.30.0
+nnabla==1.0.12
+opencv-python==4.0.0.21
+google-cloud-storage

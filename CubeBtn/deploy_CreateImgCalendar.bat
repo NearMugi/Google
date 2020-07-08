@@ -1,0 +1,2 @@
+cd /d %~dp0\CreateImgCalendar
+gcloud functions deploy CreateImgCalendar --runtime python37 --trigger-resource CreateImgCalendar --env-vars-file .env.yaml --trigger-event google.pubsub.topic.publish --region asia-northeast1

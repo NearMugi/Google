@@ -1,0 +1,4 @@
+# Avoid image corruption issues
+*.jpg binary
+*.gif binary
+*.png binary

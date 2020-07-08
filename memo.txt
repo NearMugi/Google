@@ -1,0 +1,82 @@
+���f�v���C
+���f�v���C���ɒ��ӁB
+��package.json��"main"�ɂ����ӁB�ǂݍ���ł���t�@�C�����Ⴄ�����B�B�B
+
+��GoogleHomeMini�ELine
+gcloud functions deploy FromLineBotBeebotte --trigger-http --entry-point handler --region asia-northeast1
+gcloud functions deploy ToLineBot --trigger-http --entry-point handler --region asia-northeast1
+
+
+gcloud functions deploy Linebot_FromLineToGoogleHome --trigger-http --entry-point handler_Fromline --region asia-northeast1
+gcloud functions deploy Linebot_FromGoogleHomeToLine --trigger-http --entry-point handler_Toline --region asia-northeast1
+
+��SpreadSheets
+gcloud functions deploy AccessSpreadSheet --trigger-http --entry-point handler --region asia-northeast1
+
+��FoodMenu
+gcloud functions deploy ReadFoodMenu --trigger-http --entry-point handler --region asia-northeast1
+
+��Wakeup
+gcloud functions deploy ReadAndWriteWakeup --trigger-http --entry-point handler --region asia-northeast1
+
+��GCP Storage
+gcloud functions deploy Storage_ReadStream --trigger-http --entry-point handler --region us-central1 --runtime nodejs8
+�C���v�b�g�f�[�^�̗�
+{"bucket" : "homeiot_storage" , "fn" : "CatImage/20190214_103112.jpeg"}
+
+��Drive
+gcloud functions deploy Drive_Download --trigger-http --entry-point handler --region asia-northeast1 --runtime nodejs8
+gcloud functions deploy Drive_Upload --trigger-http --entry-point handler --region asia-northeast1 --runtime nodejs8
+
+
+Python�̏ꍇ
+gcloud functions deploy hello_get --runtime python37 --trigger-http --region asia-northeast1
+"hello_get"��main.py���̊֐���
+
+gcloud functions deploy nnc_sample --runtime python37 --trigger-http --region asia-northeast1
+gcloud functions deploy Storage_Download --runtime python37 --trigger-http --region us-central1
+gcloud functions deploy Drive_download_py --runtime python37 --trigger-http --region asia-northeast1
+gcloud functions deploy imageResize --runtime python37 --trigger-http --region asia-northeast1
+
+���L���b�g�^���[
+��nnc�̓�����������Ȃ������悤�Ȃ̂Ń��������w��
+gcloud functions deploy CW_nnc --runtime python37 --trigger-http --region us-central1 --memory 512MB
+gcloud functions deploy CW_outputSpreadSheets --runtime nodejs8 --trigger-http --entry-point handler --region asia-northeast1
+gcloud functions deploy CW_getImage --runtime python37 --trigger-http --region asia-northeast1
+
+
+
+��RuntimeConfig
+https://cloud.google.com/sdk/gcloud/reference/beta/runtime-config/configs/create
+
+���X�g
+gcloud beta runtime-config configs list
+
+�R���t�B�O���̃��X�g
+gcloud beta runtime-config configs variables list --config-name SpreadSheets-Config
+
+RuntimeConfig�쐬
+gcloud beta runtime-config configs create [CONFIG_NAME] --description [DESCRIPTION]
+
+RuntimeConfig�폜
+gcloud beta runtime-config configs delete [CONFIG_NAME]
+
+RuntimeConfig�Ƀf�[�^��ǉ�(�X�V)
+gcloud beta runtime-config configs variables set �ϐ��� �l --config-name SpreadSheets-Config --is-text
+
+�f�[�^�̊m�F
+gcloud beta runtime-config configs variables get-value SHEET_ID_FOODMENU --config-name=SpreadSheets-Config
+
+�f�[�^�̍폜
+gcloud beta runtime-config configs variables unset �ϐ��� --config-name=SpreadSheets-Config
+
+
+
+
+��������֐��Ƀf�[�^��POST����
+curl -X POST -H "Content-Type:application/json"  -d '{"date":1}' https://asia-northeast1-[PROJECT_ID].cloudfunctions.net/ReadFoodMenu
+
+curl -X POST -H "Content-Type:application/json"  -d '{"ts":1, "user":1}' https://asia-northeast1-[PROJECT_ID].cloudfunctions.net/ReadAndWriteWakeup
+
+
+

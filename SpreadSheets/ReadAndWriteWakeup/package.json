@@ -1,0 +1,17 @@
+{
+  "name": "readandwritewakeup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/rcloadenv": "^0.3.2",
+    "date-utils": "^1.2.21",
+    "dotenv": "^6.2.0",
+    "google-spreadsheet": "^2.0.7"
+  }
+}
