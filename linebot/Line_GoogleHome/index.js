@@ -24,7 +24,6 @@ function handleEvent(event) {
             return false;
         }
 
-
         const config = {
             channelAccessToken: envConfig.CHANNEL_ACCESS_TOKEN,
             channelSecret: envConfig.CHANNEL_SECRET,
@@ -34,7 +33,6 @@ function handleEvent(event) {
 
         var clientBeebotte = new bbt.Connector({ apiKey: envConfig.BEEBOTTE_API, secretKey: envConfig.BEEBOTTE_SECRET_KEY });
         var ch = envConfig.BEEBOTTE_CHANNEL;
-        var gId = envConfig.BEEBOTTE_RESOURCE_GROUPID;
 
         client.getGroupMemberProfile(groupId, userId)
             .then((profile) => {
@@ -43,7 +41,6 @@ function handleEvent(event) {
                 clientBeebotte.writeBulk(
                     {
                         channel: ch, records: [
-                            { resource: gId, data: groupId },
                             {
                                 resource: "message", data: {
                                     "user": userName,
@@ -81,57 +78,6 @@ exports.handler_Fromline = function echoBot(req, res) {
                 .all(req.body.events.map(handleEvent))
                 .then(result => res.status(200).send(`Success: ${result}`))
                 .catch(err => res.status(400).send(err.toString()));
-        })
-        .catch((err) => {
-            console.error('ERROR:', err);
-        })
-};
-
-
-exports.handler_Toline = (req, res) => {
-    rcloadenv.getAndApply('LINE-Config', {})
-        .then((env) => {
-
-            const config = {
-                channelAccessToken: env.CHANNEL_ACCESS_TOKEN,
-                channelSecret: env.CHANNEL_SECRET,
-            };
-
-            const client = new line.Client(config);
-
-
-            var clientBeebotte = new bbt.Connector({ apiKey: env.BEEBOTTE_API, secretKey: env.BEEBOTTE_SECRET_KEY });
-            var ch = env.BEEBOTTE_CHANNEL;
-            var gId = env.BEEBOTTE_RESOURCE_GROUPID;
-
-            var json = req.body;
-            console.log(json);
-
-            var sendMsg = '[GoogleHomeMini]\n';
-            sendMsg += json.data;
-
-            var sendGroupId = '';
-            clientBeebotte.read(
-                { channel: ch, resource: gId },
-                function (err, res) {
-                    if (err) throw (err);
-                    sendGroupId = res[0].data;
-                    console.log('[sendGroupId]' + sendGroupId);
-
-                    const message = {
-                        type: 'text',
-                        text: sendMsg
-                    };
-
-                    client.pushMessage(sendGroupId, message)
-                        .then(() => {
-                        })
-                        .catch((err) => {
-                            if (err) throw (err);
-                        });
-                }
-            );
-            res.send('Done! Wait for a while until the message arrives....');
         })
         .catch((err) => {
             console.error('ERROR:', err);
