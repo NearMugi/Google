@@ -1,2 +1,0 @@
-これをたたく　※デプロイ名に注意。
-gcloud beta functions deploy GCPSample --trigger-http --entry-point handler --region asia-northeast1
