@@ -2,7 +2,7 @@
 
 ## Fromline
 
-### line(lineAPI) -> CloudFunctions -> Beebotte -> Node-Red -> GoogleHomeMini
+### line(lineAPI) -> CloudFunctions -> Beebotte -> Node-Red -> Beebotte -> ESP32 -> GoogleHomeMini
 
 ## ToLine
 
