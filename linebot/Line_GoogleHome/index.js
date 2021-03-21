@@ -83,3 +83,53 @@ exports.handler_Fromline = function echoBot(req, res) {
             console.error('ERROR:', err);
         })
 };
+
+exports.handler_Toline = (req, res) => {
+    rcloadenv.getAndApply('LINE-Config', {})
+        .then((env) => {
+
+            const config = {
+                channelAccessToken: env.CHANNEL_ACCESS_TOKEN,
+                channelSecret: env.CHANNEL_SECRET,
+            };
+
+            const client = new line.Client(config);
+
+
+            var clientBeebotte = new bbt.Connector({ apiKey: env.BEEBOTTE_API, secretKey: env.BEEBOTTE_SECRET_KEY });
+            var ch = env.BEEBOTTE_CHANNEL;
+            var gId = env.BEEBOTTE_RESOURCE_GROUPID;
+
+            var json = req.body;
+            console.log(json);
+
+            var sendMsg = '[GoogleHomeMini]\n';
+            sendMsg += json.data;
+
+            var sendGroupId = '';
+            clientBeebotte.read(
+                { channel: ch, resource: gId },
+                function (err, res) {
+                    if (err) throw (err);
+                    sendGroupId = res[0].data;
+                    console.log('[sendGroupId]' + sendGroupId);
+
+                    const message = {
+                        type: 'text',
+                        text: sendMsg
+                    };
+
+                    client.pushMessage(sendGroupId, message)
+                        .then(() => {
+                        })
+                        .catch((err) => {
+                            if (err) throw (err);
+                        });
+                }
+            );
+            res.send('Done! Wait for a while until the message arrives....');
+        })
+        .catch((err) => {
+            console.error('ERROR:', err);
+        })
+};
