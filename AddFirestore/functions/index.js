@@ -6,7 +6,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-exports.addMessage = functions
+exports.addFireStore = functions
     .region('asia-northeast1')
     .https.onRequest(async (req, res) => {
         const collection = 'testCollection';
@@ -21,7 +21,7 @@ exports.addMessage = functions
         console.log(ts);
         console.log(data);
 
-        const writeResult = await admin.firestore()
+        await admin.firestore()
             .collection(collection)
             .doc(String(ts))
             .set(
