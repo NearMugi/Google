@@ -6,7 +6,7 @@
 [はじめに: 最初の関数の記述、テスト、デプロイ  |  Firebase](https://firebase.google.com/docs/functions/get-started?hl=ja)
 
 
-ポイントとしては、npmのインストールはfunctionsフォルダ内で行うこと
+npmのインストールはfunctionsフォルダ内で行うこと
 ```sh
 npm install firebase-functions@latest firebase-admin@latest --save
 npm install -g firebase-tools
